@@ -16,28 +16,29 @@ def calc_ngram():
 def calc_unigram():
     word = raw_input("Please enter your word: ")
 
-    test = get_corpus_two()
+    test = get_corpus_one()
+    vocabulary_set = set(test)
 
     occurrence_count = len(re.findall(word, test))
     word_count = len(re.findall("\\w+", test))
 
-    print occurrence_count
-    print word_count
-
+    print("Occurrence rate: {}/{}".format(occurrence_count, word_count))
     print("P(w) = {}".format(float(occurrence_count) / word_count))
+    print("PLaplace(wi) = {}").format(float(occurrence_count + 1) / (word_count + len(vocabulary_set)))
 
 def calc_bigram():
     word = raw_input("Please enter your word: ")
     preceding_word = raw_input("Please enter the preceding word: ")
 
-    test = "llama llama duck test thing stuff llama"
+    test = get_corpus_one()
+    vocabulary_set = set(test)
 
     occurrence_count = len(re.findall(preceding_word + " " + word, test))
     word_count = len(re.findall(preceding_word, test))
 
-    print occurrence_count
-    print word_count
-    print("P(w1 | w-1) = {}".format(float(occurrence_count) / word_count))
+    print("Occurrence rate: {}/{}".format(occurrence_count, word_count))
+    print("P(w(n) | w(n-1)) = {}".format(float(occurrence_count) / word_count))
+    print("PLaplace(w(n) | w(n-1)) = {}".format(float(occurrence_count + 1) / (word_count + len(vocabulary_set))))
 
 def get_corpus_one():
     return get_file_contents("alice_in_wonderland_by_lewis_carroll.txt")
